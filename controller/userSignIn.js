@@ -15,12 +15,12 @@ async function userSignInController(req, res) {
         const user = await userModal.findOne({ email })
         if (user) {
             const checkPassword = await bcrypt.compare(password, user.password)
-            const tokenData={
-                _id:user._id,
-                username:user.email
+            const tokenData = {
+                _id: user._id,
+                username: user.email
             }
             if (checkPassword) {
-                jwt.sign( tokenData , process.env.TOKEN_SECRET_KEY, { expiresIn: '2h' }, (err, token) => {
+                await jwt.sign({ tokenData }, process.env.TOKEN_SECRET_KEY, { expiresIn: '2h' }, (err, token) => {
                     if (err) {
                         res.status(400).json({
                             message: err,
@@ -33,10 +33,10 @@ async function userSignInController(req, res) {
                             httpOnly: true,
                             secure: true,
                         }
-                        res.cookie("token", token, tokenOption).status(200).json({
+                        res.cookie("token", token, tokenOption).json({
                             message: "Login Successfully",
                             data: token,
-                            user: user,
+                            user: tokenData,
                             success: true,
                             error: false
                         })
