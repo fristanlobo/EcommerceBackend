@@ -1,14 +1,14 @@
 const userModal = require("../models/userModel");
 
-async function allUsers(req,res) {
+async function allUsers(req, res) {
     try {
-        const allUser= await userModal.find()
-       res.json({
-        message:"All user Details ",
-        data:allUser,
-        success:true,
-        error:false
-       })
+        const allUser = await userModal.find()
+        res.json({
+            message: "All user Details ",
+            data: allUser,
+            success: true,
+            error: false
+        })
     }
     catch (e) {
         res.status(400).json({
@@ -19,4 +19,4 @@ async function allUsers(req,res) {
     }
 }
 
-module.exports=allUsers;
+module.exports = allUsers;
